@@ -1,8 +1,8 @@
 {
-  "name": "vant-demo-vue2",
+  "name": "xmu-chain-app",
   "version": "1.0.0",
-  "description": "Collection of vant demos.",
-  "author": "neverland <chenjiahan@neverl.com>",
+  "description": "XMU-食品溯源",
+  "author": "zhangbincheng1997 <1656704949@qq.com>",
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",

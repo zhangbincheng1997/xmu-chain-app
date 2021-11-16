@@ -1,13 +1,12 @@
 <template>
   <div>
-    <van-cell :title="title" icon="home-o" />
+    <van-nav-bar :title="'溯源码：' + code" />
     <van-swipe :autoplay="3000">
       <van-swipe-item v-for="image in images" :key="image">
         <img :src="image" alt="" style="width: 100%;">
       </van-swipe-item>
     </van-swipe>
     <van-divider :style="{ color: '#1989fa', borderColor: '#1989fa', padding: '0 16px' }">食品溯源</van-divider>
-    <van-notice-bar left-icon="info-o">当前溯源码：{{ code }}</van-notice-bar>
     <van-grid clickable :column-num="3">
       <van-grid-item v-for="(item, i) in traceHead" :key="i" :icon="item.icon" :text="item.text"
                      :to="getTo(item.to)" :url="item.url" @click="item.click" />
@@ -27,7 +26,7 @@ import {
   Divider,
   Grid,
   GridItem,
-  NoticeBar,
+  NavBar,
   Search,
   Swipe,
   SwipeItem
@@ -40,14 +39,13 @@ export default {
     [Divider.name]: Divider,
     [Grid.name]: Grid,
     [GridItem.name]: GridItem,
-    [NoticeBar.name]: NoticeBar,
+    [NavBar.name]: NavBar,
     [Search.name]: Search,
     [Swipe.name]: Swipe,
     [SwipeItem.name]: SwipeItem
   },
   data() {
     return {
-      title: this.$route.meta.title,
       code: this.$route.query.code,
       images: [
         'http://qiniu.littleredhat1997.com/dawn.jpg',
