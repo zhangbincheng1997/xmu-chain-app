@@ -9,7 +9,7 @@
     <van-divider :style="{ color: '#1989fa', borderColor: '#1989fa', padding: '0 16px' }">食品溯源</van-divider>
     <van-grid clickable :column-num="3">
       <van-grid-item v-for="(item, i) in traceHead" :key="i" :icon="item.icon" :text="item.text"
-                     :to="getTo(item.to)" :url="item.url" @click="item.click" />
+                     :to="getTo(item.to)" :url="item.url" @click="item.click ? item.click() : undefined" />
     </van-grid>
     <van-divider :style="{ color: '#1989fa', borderColor: '#1989fa', padding: '0 16px' }">区块链</van-divider>
     <van-grid :column-num="2">
@@ -20,7 +20,6 @@
 
 <script>
 import {
-  Toast,
   Cell,
   Dialog,
   Divider,
@@ -31,6 +30,7 @@ import {
   Swipe,
   SwipeItem
 } from 'vant';
+import chain from '../api/chain'
 
 export default {
   components: {
@@ -57,21 +57,22 @@ export default {
         { text: '农事情况', icon: 'http://qiniu.littleredhat1997.com/xmu/farm.png', to: '/farm' },
         { text: '加工情况', icon: 'http://qiniu.littleredhat1997.com/xmu/process.png', to: '/process' },
         { text: '防伪查询', icon: 'http://qiniu.littleredhat1997.com/xmu/check.png', to: '/check' },
-        { text: '区块详情', icon: 'http://qiniu.littleredhat1997.com/xmu/blockchain.png', to: '/blockchain' },
+        { text: '区块链浏览器', icon: 'http://qiniu.littleredhat1997.com/xmu/blockchain.png', to: '/blockchain' },
         { text: '联系客服', icon: 'http://qiniu.littleredhat1997.com/xmu/contact.png', click: this.contact },
         { text: '技术支持', icon: 'http://qiniu.littleredhat1997.com/xmu/website.jpg', url: 'https://github.com/zhangbincheng1997' },
         { text: '官方网站', icon: 'http://qiniu.littleredhat1997.com/xmu/website.jpg', url: 'https://www.pzcnet.com/home' },
       ],
       numberHead: [
-        { text: '节点个数', icon: 'http://qiniu.littleredhat1997.com/xmu/nodes.png', value: '4' },
-        { text: '智能合约', icon: 'http://qiniu.littleredhat1997.com/xmu/contract.png', value: '10' },
-        { text: '区块数量', icon: 'http://qiniu.littleredhat1997.com/xmu/block.png', value: '99+' },
-        { text: '交易数量', icon: 'http://qiniu.littleredhat1997.com/xmu/transation.png', value: '99+' }
+        { text: '节点个数', name: 'nodeCount', icon: 'http://qiniu.littleredhat1997.com/xmu/nodes.png', value: 0 },
+        { text: '已部署的智能合约', name: 'contractCount', icon: 'http://qiniu.littleredhat1997.com/xmu/contract.png', value: 0 },
+        { text: '区块数量', name: 'latestBlock', icon: 'http://qiniu.littleredhat1997.com/xmu/block.png', value: 0 },
+        { text: '交易数量', name: 'transactionCount', icon: 'http://qiniu.littleredhat1997.com/xmu/transation.png', value: 0 }
       ]
     };
   },
   mounted() {
-    if (!this.code) this.code = 1 // for debug
+    if (!this.code) this.code = 100000 // for debug
+    this.getNumberData()
   },
   methods: {
     getTo(to) {
@@ -84,8 +85,16 @@ export default {
         message: '<img src="http://qiniu.littleredhat1997.com/xmu/pzc.jpg" alt="" width="200px" height="200px" />'
       })
     },
-    sorry() {
-      Toast('暂无后续逻辑~')
+    getNumberData() {
+      chain.getNumberData().then(res => {
+        this.numberHead.forEach(function(value) {
+          for (const i in res.data) {
+            if (value.name === i) {
+              value.value = res.data[i]
+            }
+          }
+        })
+      })
     }
   }
 };

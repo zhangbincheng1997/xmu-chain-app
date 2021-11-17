@@ -54,7 +54,14 @@ const routes = [
     name: 'blockchain',
     component: () => import('./view/blockchain'),
     meta: {
-      title: 'XMU-区块详情'
+      title: 'XMU-区块链浏览器'
+    }
+  },
+  {
+    name: 'transDetail',
+    component: () => import('./view/transDetail'),
+    meta: {
+      title: 'XMU-交易详情'
     }
   }
 ];
