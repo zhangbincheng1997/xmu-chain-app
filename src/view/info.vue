@@ -6,6 +6,22 @@
     </div>
     <div v-else>
       <van-tabs animated>
+        <van-tab title="企业信息">
+          <van-cell-group>
+            <van-image :src="companyInfo.logo" />
+            <van-cell title="名称" :value="companyInfo.name" />
+            <van-cell title="法人" :value="companyInfo.legalPerson" />
+            <van-cell title="联系人" :value="companyInfo.contactPerson" />
+            <van-cell title="联系电话" :value="companyInfo.contactPhone" />
+            <van-cell title="联系地址" :value="companyInfo.contactAddress" />
+            <van-cell title="成立日期" :value="companyInfo.foundDate" />
+            <van-cell title="官方网站" :value="companyInfo.officialWebsite" />
+            <van-cell title="注册号码" :value="companyInfo.registerNumber" />
+            <van-cell title="注册资本" :value="companyInfo.registerCapital" />
+            <van-cell title="营业范围" :value="companyInfo.businessScope" />
+            <van-image :src="companyInfo.businessLicense" />
+          </van-cell-group>
+        </van-tab>
         <van-tab title="商品信息">
           <van-cell-group>
             <van-image :src="productTemplate.image" />
@@ -59,8 +75,9 @@ import {
   Tab,
   Tabs
 } from 'vant';
-import trace from '../api/trace'
+import company from '../api/company'
 import template from '../api/template'
+import trace from '../api/trace'
 
 export default {
   components: {
@@ -76,6 +93,7 @@ export default {
     return {
       code: this.$route.query.code,
       template: undefined,
+      companyInfo: {},
       corpTemplate: {},
       productTemplate: {},
       placeTemplate: {},
@@ -95,6 +113,7 @@ export default {
       trace.getAdmin(this.code).then(res => {
         this.template = res.data
         Promise.all([
+          company.get(this.template.companyId).then(res => { this.companyInfo = res.data }),
           template.getCorp(this.template.corpId).then(res => { this.corpTemplate = res.data }),
           template.getProduct(this.template.productId).then(res => { this.productTemplate = res.data }),
           template.getPlace(this.template.placeId).then(res => { this.placeTemplate = res.data }),

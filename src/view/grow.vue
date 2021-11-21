@@ -5,8 +5,8 @@
       <van-cell-group v-for="(item, i) in list" :key="i" :title="'# ' + item.id + ' - ' + item.createTime">
         <van-image :src="item.image" />
         <van-cell title="温度" :value="item.temperature" />
-        <van-cell title="光照" :value="item.humidity" />
-        <van-cell title="价格" :value="item.light" />
+        <van-cell title="湿度" :value="item.humidity" />
+        <van-cell title="光照" :value="item.light" />
         <van-cell title="备注" :value="item.remark" />
       </van-cell-group>
     </van-list>

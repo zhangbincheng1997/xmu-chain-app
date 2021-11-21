@@ -1,8 +1,10 @@
 import request from '../utils/request'
 
+const API = '/service-eth/app-api/v1/browser'
+
 function getNumberData(data) {
     return request({
-        url: '/chain/group/general',
+        url: API + '/group/general',
         method: 'get',
         params: data
     })
@@ -10,7 +12,7 @@ function getNumberData(data) {
 
 function getTransactionList(data) {
     return request({
-        url: '/chain/transaction/transList',
+        url: API + '/transaction/transList',
         method: 'get',
         params: data
     })
@@ -18,7 +20,7 @@ function getTransactionList(data) {
 
 function getTransactionReceipt(transHash) {
     return request({
-        url: '/chain/transaction/transactionReceipt',
+        url: API + '/transaction/transactionReceipt',
         method: 'get',
         params: {
             transHash: transHash
@@ -28,7 +30,7 @@ function getTransactionReceipt(transHash) {
 
 function decode(transHash) {
     return request({
-        url: '/chain/decode',
+        url: API + '/decode',
         method: 'get',
         params: {
             transHash: transHash

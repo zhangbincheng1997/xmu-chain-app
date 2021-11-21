@@ -7,11 +7,10 @@ const service = axios.create({
   timeout: 5 * 1000
 })
 
-// TODO
 // request interceptor
 service.interceptors.request.use(
     config => {
-        config.headers['Authorization'] = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MjAyMTAzMTQwMH0.6N8kT2kht37mD4DAEXaIrqUP_yJMXvdgXxf25RejGRscF_CW3CICj0LCeTkrogDsMphvDr6B73ankKkuffaOhw'
+        // config.headers['Authorization'] = 'Bearer '
         return config
     },
     error => {

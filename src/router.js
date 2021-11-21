@@ -12,7 +12,7 @@ const routes = [
     name: 'home',
     component: () => import('./view/home'),
     meta: {
-      title: 'XMU-食品追溯'
+      title: 'XMU-食品溯源'
     }
   },
   {

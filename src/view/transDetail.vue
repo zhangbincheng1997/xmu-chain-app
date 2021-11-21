@@ -41,24 +41,6 @@
   </div>
 </template>
 
-<style>
-.input-data {
-  display: inline-block;
-  width: 100%;
-  padding: 10px;
-  overflow: auto;
-  word-break: break-all;
-  word-wrap: break-word;
-  box-sizing: border-box;
-}
-.input-label .label {
-  display: inline-block;
-  font-weight: bold;
-  width: 120px;
-  color: #99a9bf;
-}
-</style>
-
 <script>
 import {
   Button,
@@ -134,8 +116,8 @@ export default {
       }
     },
     decodeLogClick(i) {
-      if (this.result.events[i]) {
-        this.decode = this.result.events[i]
+      if (this.result.logs[i]) {
+        this.decode = this.result.logs[i]
         this.isOk = true
       }
     }
