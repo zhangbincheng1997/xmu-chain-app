@@ -23,7 +23,6 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     if (res.code !== 0) {
-      // for debug
       Toast.fail(res.message || 'Error')
       return Promise.reject(new Error(res.message || 'Error'))
     } else {

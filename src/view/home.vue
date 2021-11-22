@@ -30,7 +30,7 @@ import {
   Swipe,
   SwipeItem
 } from 'vant';
-import chain from '../api/chain'
+import browser from '../api/browser'
 
 export default {
   components: {
@@ -57,7 +57,7 @@ export default {
         { text: '农事情况', icon: 'http://qiniu.littleredhat1997.com/xmu/farm.png', to: '/farm' },
         { text: '加工情况', icon: 'http://qiniu.littleredhat1997.com/xmu/process.png', to: '/process' },
         { text: '防伪查询', icon: 'http://qiniu.littleredhat1997.com/xmu/check.png', to: '/check' },
-        { text: '区块链浏览器', icon: 'http://qiniu.littleredhat1997.com/xmu/blockchain.png', to: '/blockchain' },
+        { text: '区块链浏览器', icon: 'http://qiniu.littleredhat1997.com/xmu/browser.png', to: '/browser' },
         { text: '联系客服', icon: 'http://qiniu.littleredhat1997.com/xmu/contact.png', click: this.contact },
         { text: '技术支持', icon: 'http://qiniu.littleredhat1997.com/xmu/website.jpg', url: 'https://github.com/zhangbincheng1997' },
         { text: '官方网站', icon: 'http://qiniu.littleredhat1997.com/xmu/website.jpg', url: 'https://www.pzcnet.com/home' },
@@ -86,7 +86,7 @@ export default {
       })
     },
     getNumberData() {
-      chain.getNumberData().then(res => {
+      browser.getNumberData().then(res => {
         this.numberHead.forEach(function(value) {
           for (const i in res.data) {
             if (value.name === i) {

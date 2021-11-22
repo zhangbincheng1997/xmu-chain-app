@@ -42,7 +42,7 @@ import {
   Pagination,
   Search,
 } from 'vant';
-import chain from '../api/chain'
+import browser from '../api/browser'
 
 // 查询
 const defaultQuery = {
@@ -99,7 +99,7 @@ export default {
     },
     getTransactionList: function() {
       this.loading = true
-      chain.getTransactionList(this.query).then(res => {
+      browser.getTransactionList(this.query).then(res => {
         this.loading = false
         this.list = res.data
         this.total = res.totalCount

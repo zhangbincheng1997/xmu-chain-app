@@ -53,7 +53,7 @@ import {
   Tab,
   Tabs
 } from 'vant';
-import chain from '../api/chain'
+import browser from '../api/browser'
 
 export default {
   components: {
@@ -95,10 +95,10 @@ export default {
     },
     init() {
       this.loading = true
-      chain.getTransactionReceipt(this.transHash).then(res => {
+      browser.getTransactionReceipt(this.transHash).then(res => {
         this.receipt = res.data
       })
-      chain.decode(this.transHash).then(res => {
+      browser.decode(this.transHash).then(res => {
         this.result = res.data
       })
       this.loading = false
