@@ -2,7 +2,7 @@ import request from '../utils/request'
 
 const API = '/service-eth/app-api/v1/browser'
 
-function getNumberData(data) {
+export function getNumberData(data) {
     return request({
         url: API + '/group/general',
         method: 'get',
@@ -10,7 +10,7 @@ function getNumberData(data) {
     })
 }
 
-function getTransactionList(data) {
+export function getTransactionList(data) {
     return request({
         url: API + '/transaction/transList',
         method: 'get',
@@ -18,7 +18,7 @@ function getTransactionList(data) {
     })
 }
 
-function getTransactionReceipt(transHash) {
+export function getTransactionReceipt(transHash) {
     return request({
         url: API + '/transaction/transactionReceipt',
         method: 'get',
@@ -28,7 +28,7 @@ function getTransactionReceipt(transHash) {
     })
 }
 
-function decode(transHash) {
+export function decode(transHash) {
     return request({
         url: API + '/decode',
         method: 'get',
@@ -36,11 +36,4 @@ function decode(transHash) {
             transHash: transHash
         }
     })
-}
-
-export default {
-    getNumberData,
-    getTransactionList,
-    getTransactionReceipt,
-    decode
 }

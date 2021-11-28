@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar :title="'溯源码：' + code" left-text="返回" left-arrow @click-left="back" />
+    <van-nav-bar :title="'溯源码：' + code" left-text="返回" left-arrow @click-left="back()" />
     <van-image src="http://qiniu.littleredhat1997.com/xmu/code.jpg" />
     <van-search
         v-model="securityCode"
@@ -47,7 +47,7 @@ import {
   NoticeBar,
   Search,
 } from 'vant';
-import tag from '../api/tag'
+import { check } from '../api/tag'
 
 export default {
   components: {
@@ -71,14 +71,11 @@ export default {
     };
   },
   methods: {
-    back() {
-      this.$router.go(-1)
-    },
     onSearch() {
       this.isOk = undefined
       if (!this.code) return
       if (!this.securityCode) return
-      tag.check(this.code, this.securityCode).then(res => {
+      check(this.code, this.securityCode).then(res => {
         this.isOk = res.data.ok
         this.list = res.data.search
       })
@@ -86,5 +83,3 @@ export default {
   }
 };
 </script>
-<style lang="less">
-</style>

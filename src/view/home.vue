@@ -30,7 +30,7 @@ import {
   Swipe,
   SwipeItem
 } from 'vant';
-import browser from '../api/browser'
+import { getNumberData } from '../api/browser'
 
 export default {
   components: {
@@ -52,11 +52,11 @@ export default {
         'http://qiniu.littleredhat1997.com/dusk.jpg'
       ],
       traceHead: [
+        { text: '防伪查询', icon: 'http://qiniu.littleredhat1997.com/xmu/check.png', to: '/check' },
         { text: '基本信息', icon: 'http://qiniu.littleredhat1997.com/xmu/info.png', to: '/info' },
         { text: '生长情况', icon: 'http://qiniu.littleredhat1997.com/xmu/grow.png', to: '/grow' },
         { text: '农事情况', icon: 'http://qiniu.littleredhat1997.com/xmu/farm.png', to: '/farm' },
         { text: '加工情况', icon: 'http://qiniu.littleredhat1997.com/xmu/process.png', to: '/process' },
-        { text: '防伪查询', icon: 'http://qiniu.littleredhat1997.com/xmu/check.png', to: '/check' },
         { text: '区块链浏览器', icon: 'http://qiniu.littleredhat1997.com/xmu/browser.png', to: '/browser' },
         { text: '联系客服', icon: 'http://qiniu.littleredhat1997.com/xmu/contact.png', click: this.contact },
         { text: '技术支持', icon: 'http://qiniu.littleredhat1997.com/xmu/website.jpg', url: 'https://github.com/zhangbincheng1997' },
@@ -86,7 +86,7 @@ export default {
       })
     },
     getNumberData() {
-      browser.getNumberData().then(res => {
+      getNumberData().then(res => {
         this.numberHead.forEach(function(value) {
           for (const i in res.data) {
             if (value.name === i) {
@@ -99,5 +99,3 @@ export default {
   }
 };
 </script>
-<style lang="less">
-</style>

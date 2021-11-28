@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar :title="transHash" left-text="返回" left-arrow @click-left="back" />
+    <van-nav-bar :title="transHash" left-text="返回" left-arrow @click-left="back()" />
     <div v-if="loading">
       <van-loading />
     </div>
@@ -29,7 +29,7 @@
         </van-tab>
       </van-tabs>
     </div>
-    <van-dialog v-model="isOk" title="解码">
+    <van-dialog v-model="isOk" title="解码" closeOnClickOverlay>
       <van-cell-group>
         <van-cell v-if="decode.methodId" title="methodId" :value="decode.methodId" />
         <van-cell v-if="decode.function" title="function" :value="decode.function" />
@@ -53,7 +53,7 @@ import {
   Tab,
   Tabs
 } from 'vant';
-import browser from '../api/browser'
+import { getTransactionReceipt, decode } from '../api/browser'
 
 export default {
   components: {
@@ -90,15 +90,12 @@ export default {
     this.init()
   },
   methods: {
-    back() {
-      this.$router.go(-1)
-    },
     init() {
       this.loading = true
-      browser.getTransactionReceipt(this.transHash).then(res => {
+      getTransactionReceipt(this.transHash).then(res => {
         this.receipt = res.data
       })
-      browser.decode(this.transHash).then(res => {
+      decode(this.transHash).then(res => {
         this.result = res.data
       })
       this.loading = false
@@ -124,5 +121,3 @@ export default {
   }
 };
 </script>
-<style lang="less">
-</style>

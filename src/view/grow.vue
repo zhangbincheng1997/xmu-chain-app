@@ -1,13 +1,15 @@
 <template>
   <div>
-    <van-nav-bar :title="'溯源码：' + code" left-text="返回" left-arrow @click-left="back" />
+    <van-nav-bar :title="'溯源码：' + code" left-text="返回" left-arrow @click-left="back()" />
     <van-list :finished="finished" finished-text="没有更多了">
-      <van-cell-group v-for="(item, i) in list" :key="i" :title="'# ' + item.id + ' - ' + item.createTime">
+      <van-cell-group v-for="(item, i) in list" :key="i" :title="'# ' + (i+1) + ': ' + item.createTime">
         <van-image :src="item.image" />
         <van-cell title="温度" :value="item.temperature" />
         <van-cell title="湿度" :value="item.humidity" />
         <van-cell title="光照" :value="item.light" />
         <van-cell title="备注" :value="item.remark" />
+        <van-cell title="用户地址" :value="item.fromAddr" is-link :to="'userDetail?address='+item.fromAddr" />
+        <van-cell title="交易Hash" :value="item.transHash" is-link :to="'transDetail?transHash='+item.transHash" />
       </van-cell-group>
     </van-list>
   </div>
@@ -21,7 +23,7 @@ import {
   List,
   NavBar
 } from 'vant';
-import trace from '../api/trace'
+import { listGrow } from '../api/trace'
 
 export default {
   components: {
@@ -42,11 +44,8 @@ export default {
     this.init()
   },
   methods: {
-    back() {
-      this.$router.go(-1)
-    },
     init() {
-      trace.listGrow(this.code).then(res => {
+      listGrow(this.code).then(res => {
         this.list = res.data
         this.finished = true
       })
@@ -54,5 +53,3 @@ export default {
   }
 };
 </script>
-<style lang="less">
-</style>

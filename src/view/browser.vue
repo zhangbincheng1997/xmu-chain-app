@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar left-text="返回" left-arrow @click-left="back" />
+    <van-nav-bar left-text="返回" left-arrow @click-left="back()" />
     <van-search
         v-model="searchKey"
         show-action
@@ -21,8 +21,8 @@
         <tr v-for="(item, i) in list" :key="i">
           <td>{{ i + 1 }}</td>
           <td>
-            <van-icon name="records" @click="onCopy(item.transHash)" />
-            <span style="color: #0db1c1;" @click="link(item.transHash)">{{ splitAddress(item.transHash) }}</span>
+            <van-icon name="records" @click="copyText(item.transHash)" />
+            <span style="color: #0db1c1;" @click="linkTransaction(item.transHash)">{{ splitAddress(item.transHash) }}</span>
           </td>
           <td>{{ item.blockNumber }}</td>
           <td>{{ item.blockTimestamp }}</td>
@@ -35,23 +35,13 @@
 
 <script>
 import {
-  Toast,
   Icon,
   Loading,
   NavBar,
   Pagination,
   Search,
 } from 'vant';
-import browser from '../api/browser'
-
-// 查询
-const defaultQuery = {
-  pageNumber: 1,
-  pageSize: 20,
-  groupId: localStorage.getItem('groupId') || 1,
-  transactionHash: undefined, // 区块hash
-  blockNumber: undefined // 块高
-}
+import { getTransactionList } from '../api/browser'
 
 export default {
   components: {
@@ -64,9 +54,15 @@ export default {
   data() {
     return {
       loading: false,
-      query: Object.assign({}, defaultQuery),
       list: [],
       total: 0,
+      query: {
+        pageNumber: 1,
+        pageSize: 20,
+        groupId: localStorage.getItem('groupId') || 1,
+        transactionHash: undefined, // 区块hash
+        blockNumber: undefined // 块高
+      },
       searchKey: undefined
     };
   },
@@ -82,9 +78,6 @@ export default {
     this.getTransactionList()
   },
   methods: {
-    back() {
-      this.$router.go(-1)
-    },
     onSearch() {
       this.query.transactionHash = undefined
       this.query.blockNumber = undefined
@@ -99,35 +92,12 @@ export default {
     },
     getTransactionList: function() {
       this.loading = true
-      browser.getTransactionList(this.query).then(res => {
+      getTransactionList(this.query).then(res => {
         this.loading = false
         this.list = res.data
         this.total = res.totalCount
       })
-    },
-    link: function(val) {
-      this.$router.push({
-        path: '/transDetail',
-        query: { transHash: val }
-      })
-    },
-    onCopy: function(val) {
-      this.$copyText(val).then(() => {
-        Toast('复制成功！')
-      })
-    },
-    splitAddress(val) {
-      if (!val) return
-      let startStr = ''
-      let endStr = ''
-      let str = ''
-      startStr = val.substring(0, 8)
-      endStr = val.substring(val.length - 6)
-      str = `${startStr}...${endStr}`
-      return str
     }
   }
 };
 </script>
-<style lang="less">
-</style>

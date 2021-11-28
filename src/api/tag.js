@@ -2,7 +2,7 @@ import request from '../utils/request'
 
 const API = '/service-trace/app-api/v1/tag'
 
-function check(code, securityCode) {
+export function check(code, securityCode) {
     return request({
         url: API + '/check',
         method: 'post',
@@ -11,8 +11,4 @@ function check(code, securityCode) {
             securityCode: securityCode
         }
     })
-}
-
-export default {
-    check
 }

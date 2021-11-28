@@ -63,6 +63,13 @@ const routes = [
     meta: {
       title: 'XMU-交易详情'
     }
+  },
+  {
+    name: 'userDetail',
+    component: () => import('./view/userDetail'),
+    meta: {
+      title: 'XMU-用户详情'
+    }
   }
 ];
 
