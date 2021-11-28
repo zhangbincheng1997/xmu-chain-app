@@ -16,15 +16,14 @@
       <van-loading />
     </div>
     <div v-else>
-      <table>
-        <tr><th>#</th><th>交易哈希</th><th>块高</th><th>创建时间</th></tr>
+      <table style="margin: 0 auto; line-height: 25px">
+        <tr><th>块高</th><th>交易哈希</th><th>创建时间</th></tr>
         <tr v-for="(item, i) in list" :key="i">
-          <td>{{ i + 1 }}</td>
+          <td>{{ item.blockNumber }}</td>
           <td>
             <van-icon name="records" @click="copyText(item.transHash)" />
             <span style="color: #0db1c1;" @click="linkTransaction(item.transHash)">{{ splitAddress(item.transHash) }}</span>
           </td>
-          <td>{{ item.blockNumber }}</td>
           <td>{{ item.blockTimestamp }}</td>
         </tr>
       </table>
@@ -63,7 +62,20 @@ export default {
         transactionHash: undefined, // 区块hash
         blockNumber: undefined // 块高
       },
-      searchKey: undefined
+      searchKey: undefined,
+      option: {
+        column: [
+          {
+            prop: 'blockNumber'
+          },
+          {
+            prop: 'transHash'
+          },
+          {
+            prop: 'blockTimestamp'
+          }
+        ]
+      }
     };
   },
   mounted: function() {

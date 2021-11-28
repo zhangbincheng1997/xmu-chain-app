@@ -10,12 +10,21 @@ export function copyText(val) {
     })
 }
 
+export function linkTransaction(val) {
+    this.$router.push({
+        path: '/transDetail',
+        query: {
+            transHash: val
+        }
+    })
+}
+
 export function splitAddress(val) {
     if (!val) return
     let startStr = ''
     let endStr = ''
     let str = ''
-    startStr = val.substring(0, 8)
+    startStr = val.substring(0, 12)
     endStr = val.substring(val.length - 6)
     str = `${startStr}...${endStr}`
     return str

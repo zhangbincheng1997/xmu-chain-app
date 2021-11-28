@@ -7,7 +7,7 @@
         <van-cell title="内容" :value="item.content" />
         <van-cell title="备注" :value="item.remark" />
         <van-cell title="用户地址" :value="item.fromAddr" is-link :to="'userDetail?address='+item.fromAddr" />
-        <van-cell title="交易Hash" :value="item.transHash" is-link :to="'transDetail?transHash='+item.transHash" />
+        <van-cell title="交易哈希" :value="item.transHash" is-link :to="'transDetail?transHash='+item.transHash" />
       </van-cell-group>
     </van-list>
   </div>

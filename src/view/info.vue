@@ -31,7 +31,7 @@
             <van-cell title="重量" :value="productTemplate.weight" />
             <van-cell title="过期时间" :value="productTemplate.exp" />
             <van-cell title="用户地址" :value="productTemplate.fromAddr" is-link :to="'userDetail?address='+productTemplate.fromAddr" />
-            <van-cell title="交易Hash" :value="productTemplate.transHash" is-link :to="'transDetail?transHash='+productTemplate.transHash" />
+            <van-cell title="交易哈希" :value="productTemplate.transHash" is-link :to="'transDetail?transHash='+productTemplate.transHash" />
           </van-cell-group>
         </van-tab>
         <van-tab title="作物信息">
@@ -43,7 +43,7 @@
             <van-cell title="除草周期" :value="corpTemplate.chucao" />
             <van-cell title="除虫周期" :value="corpTemplate.chuchong" />
             <van-cell title="用户地址" :value="corpTemplate.fromAddr" is-link :to="'userDetail?address='+corpTemplate.fromAddr" />
-            <van-cell title="交易Hash" :value="corpTemplate.transHash" is-link :to="'transDetail?transHash='+corpTemplate.transHash" />
+            <van-cell title="交易哈希" :value="corpTemplate.transHash" is-link :to="'transDetail?transHash='+corpTemplate.transHash" />
           </van-cell-group>
         </van-tab>
         <van-tab title="产地信息">
@@ -55,7 +55,7 @@
             <van-cell title="面积" :value="placeTemplate.area" />
             <van-cell title="海拔" :value="placeTemplate.altitude" />
             <van-cell title="用户地址" :value="placeTemplate.fromAddr" is-link :to="'userDetail?address='+placeTemplate.fromAddr" />
-            <van-cell title="交易Hash" :value="placeTemplate.transHash" is-link :to="'transDetail?transHash='+placeTemplate.transHash" />
+            <van-cell title="交易哈希" :value="placeTemplate.transHash" is-link :to="'transDetail?transHash='+placeTemplate.transHash" />
           </van-cell-group>
         </van-tab>
         <van-tab title="地块信息">
@@ -65,7 +65,7 @@
             <van-cell title="土壤类型" :value="plotTemplate.soilType" />
             <van-cell title="土壤酸碱度" :value="plotTemplate.soilPh" />
             <van-cell title="用户地址" :value="plotTemplate.fromAddr" is-link :to="'userDetail?address='+plotTemplate.fromAddr" />
-            <van-cell title="交易Hash" :value="plotTemplate.transHash" is-link :to="'transDetail?transHash='+plotTemplate.transHash" />
+            <van-cell title="交易哈希" :value="plotTemplate.transHash" is-link :to="'transDetail?transHash='+plotTemplate.transHash" />
           </van-cell-group>
         </van-tab>
       </van-tabs>
