@@ -20,7 +20,7 @@
       </div>
       <div v-else>
         <van-notice-bar color="#1989fa" background="#ecf9ff" left-icon="success">防伪码正确！但不是首次查询！</van-notice-bar>
-        <table>
+        <table style="margin: 0 auto; line-height: 25px">
           <tr>
             <th>#</th>
             <th v-for="(col, i) in column" :key="i">{{ col.label }}</th>

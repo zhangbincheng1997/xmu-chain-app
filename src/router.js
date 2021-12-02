@@ -23,24 +23,10 @@ const routes = [
     }
   },
   {
-    name: 'grow',
-    component: () => import('./view/grow'),
+    name: 'operate',
+    component: () => import('./view/operate'),
     meta: {
-      title: 'XMU-生长情况'
-    }
-  },
-  {
-    name: 'farm',
-    component: () => import('./view/farm'),
-    meta: {
-      title: 'XMU-农事情况'
-    }
-  },
-  {
-    name: 'process',
-    component: () => import('./view/process'),
-    meta: {
-      title: 'XMU-加工情况'
+      title: 'XMU-溯源情况'
     }
   },
   {

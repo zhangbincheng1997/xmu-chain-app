@@ -39,6 +39,7 @@ import {
   NavBar,
   Pagination,
   Search,
+  Toast
 } from 'vant';
 import { getTransactionList } from '../api/browser'
 
@@ -109,6 +110,29 @@ export default {
         this.list = res.data
         this.total = res.totalCount
       })
+    },
+    copyText(val) {
+      this.$copyText(val).then(() => {
+        Toast('复制成功！')
+      })
+    },
+    linkTransaction(val) {
+      this.$router.push({
+        path: '/transDetail',
+        query: {
+          transHash: val
+        }
+      })
+    },
+    splitAddress(val) {
+      if (!val) return
+      let startStr = ''
+      let endStr = ''
+      let str = ''
+      startStr = val.substring(0, 12)
+      endStr = val.substring(val.length - 6)
+      str = `${startStr}...${endStr}`
+      return str
     }
   }
 };

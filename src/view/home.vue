@@ -48,18 +48,14 @@ export default {
     return {
       code: this.$route.query.code,
       images: [
-        'http://qiniu.littleredhat1997.com/dawn.jpg',
-        'http://qiniu.littleredhat1997.com/dusk.jpg'
+        'http://qiniu.littleredhat1997.com/xmu/chain-bg.png'
       ],
       traceHead: [
-        { text: '防伪查询', icon: 'http://qiniu.littleredhat1997.com/xmu/check.png', to: '/check' },
         { text: '基本信息', icon: 'http://qiniu.littleredhat1997.com/xmu/info.png', to: '/info' },
-        { text: '生长情况', icon: 'http://qiniu.littleredhat1997.com/xmu/grow.png', to: '/grow' },
-        { text: '农事情况', icon: 'http://qiniu.littleredhat1997.com/xmu/farm.png', to: '/farm' },
-        { text: '加工情况', icon: 'http://qiniu.littleredhat1997.com/xmu/process.png', to: '/process' },
+        { text: '溯源情况', icon: 'http://qiniu.littleredhat1997.com/xmu/operate.png', to: '/operate' },
+        { text: '防伪查询', icon: 'http://qiniu.littleredhat1997.com/xmu/check.png', to: '/check' },
         { text: '区块链浏览器', icon: 'http://qiniu.littleredhat1997.com/xmu/browser.png', to: '/browser' },
-        { text: '联系客服', icon: 'http://qiniu.littleredhat1997.com/xmu/contact.png', click: this.contact },
-        { text: '技术支持', icon: 'http://qiniu.littleredhat1997.com/xmu/website.jpg', url: 'https://github.com/zhangbincheng1997' },
+        { text: '联系客服', icon: 'http://qiniu.littleredhat1997.com/xmu/wechat.png', click: this.wechat },
         { text: '官方网站', icon: 'http://qiniu.littleredhat1997.com/xmu/website.jpg', url: 'https://www.pzcnet.com/home' },
       ],
       numberHead: [
@@ -79,7 +75,7 @@ export default {
       if (!to) return
       return to + '?code=' + this.code
     },
-    contact() {
+    wechat() {
       Dialog.alert({
         title: '联系客服',
         message: '<img src="http://qiniu.littleredhat1997.com/xmu/pzc.jpg" alt="" width="200px" height="200px" />'

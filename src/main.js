@@ -7,7 +7,7 @@ import VueClipboard from 'vue-clipboard2'
 Vue.use(VueClipboard)
 
 // 全局方法注册
-import * as utils from '@/utils/utils'
+import * as utils from './utils/utils'
 Object.keys(utils).forEach(key => {
   Vue.prototype[key] = utils[key]
 })
