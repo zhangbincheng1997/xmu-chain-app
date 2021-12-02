@@ -12,23 +12,19 @@
         <div @click="onSearch">查询</div>
       </template>
     </van-search>
-    <div v-if="loading">
-      <van-loading />
-    </div>
-    <div v-else>
-      <table style="margin: 0 auto; line-height: 25px">
-        <tr><th>块高</th><th>交易哈希</th><th>创建时间</th></tr>
-        <tr v-for="(item, i) in list" :key="i">
-          <td>{{ item.blockNumber }}</td>
-          <td>
-            <van-icon name="records" @click="copyText(item.transHash)" />
-            <span style="color: #0db1c1;" @click="linkTransaction(item.transHash)">{{ splitAddress(item.transHash) }}</span>
-          </td>
-          <td>{{ item.blockTimestamp }}</td>
-        </tr>
-      </table>
-      <van-pagination v-model="query.pageNumber" :items-per-page="query.pageSize" :total-items="total" @change="getTransactionList" />
-    </div>
+    <van-loading v-if="loading" />
+    <table style="margin: 0 auto; line-height: 25px">
+      <tr><th>块高</th><th>交易哈希</th><th>创建时间</th></tr>
+      <tr v-for="(item, i) in list" :key="i">
+        <td>{{ item.blockNumber }}</td>
+        <td>
+          <van-icon name="records" @click="copyText(item.transHash)" />
+          <span style="color: #0db1c1;" @click="linkTransaction(item.transHash)">{{ splitAddress(item.transHash) }}</span>
+        </td>
+        <td>{{ item.blockTimestamp }}</td>
+      </tr>
+    </table>
+    <van-pagination v-model="query.pageNumber" :items-per-page="query.pageSize" :total-items="total" @change="getTransactionList" />
   </div>
 </template>
 

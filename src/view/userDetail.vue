@@ -1,19 +1,15 @@
 <template>
   <div>
     <van-nav-bar :title="address" left-text="返回" left-arrow @click-left="back()" />
-    <div v-if="loading">
-      <van-loading />
-    </div>
-    <div v-else>
-      <van-cell-group>
-        <van-image :src="info.avatar" />
-        <van-cell title="姓名" :value="info.name" />
-        <van-cell title="手机" :value="info.phone" />
-        <van-cell title="邮箱" :value="info.email" />
-        <van-cell title="生日" :value="info.birthday" />
-        <van-cell title="性别" :value="genderMap[info.gender]" />
-      </van-cell-group>
-    </div>
+    <van-loading v-if="loading" />
+    <van-cell-group>
+      <van-image :src="info.avatar" />
+      <van-cell title="姓名" :value="info.name" />
+      <van-cell title="手机" :value="info.phone" />
+      <van-cell title="邮箱" :value="info.email" />
+      <van-cell title="生日" :value="info.birthday" />
+      <van-cell title="性别" :value="genderMap[info.gender]" />
+    </van-cell-group>
   </div>
 </template>
 
