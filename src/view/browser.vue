@@ -5,7 +5,7 @@
         v-model="searchKey"
         show-action
         shape="round"
-        placeholder="请输入交易哈希或块高"
+        placeholder="请输入交易哈希/发送方/块高"
         @search="onSearch"
     >
       <template #action>
@@ -14,12 +14,16 @@
     </van-search>
     <van-loading v-if="loading" />
     <table style="margin: 0 auto; line-height: 25px">
-      <tr><th>块高</th><th>交易哈希</th><th>创建时间</th></tr>
+      <tr><th>块高</th><th>交易哈希</th><th>发送方</th><th>创建时间</th></tr>
       <tr v-for="(item, i) in list" :key="i">
         <td>{{ item.blockNumber }}</td>
         <td>
           <van-icon name="records" @click="copyText(item.transHash)" />
-          <span style="color: #0db1c1;" @click="linkTransaction(item.transHash)">{{ splitAddress(item.transHash) }}</span>
+          <span style="color: #0db1c1;" @click="linkHash(item.transHash)">{{ item.transHash | splitAddress }}</span>
+        </td>
+        <td>
+          <van-icon name="records" @click="copyText(item.transHash)" />
+          <span style="color: #0db1c1;" @click="linkFrom(item.transFrom)">{{ item.transFrom | splitAddress }}</span>
         </td>
         <td>{{ item.blockTimestamp }}</td>
       </tr>
@@ -47,6 +51,12 @@ export default {
     [Pagination.name]: Pagination,
     [Search.name]: Search
   },
+  filters: {
+    splitAddress: function (value) {
+      if (!value) return ''
+      return value.substring(0, 8) + '...'
+    }
+  },
   data() {
     return {
       loading: false,
@@ -56,43 +66,35 @@ export default {
         pageNumber: 1,
         pageSize: 20,
         groupId: localStorage.getItem('groupId') || 1,
-        transactionHash: undefined, // 区块hash
+        transactionHash: undefined, // 交易哈希
+        transactionFrom: undefined, // 发送方
         blockNumber: undefined // 块高
       },
-      searchKey: undefined,
-      option: {
-        column: [
-          {
-            prop: 'blockNumber'
-          },
-          {
-            prop: 'transHash'
-          },
-          {
-            prop: 'blockTimestamp'
-          }
-        ]
-      }
+      searchKey: undefined
     };
   },
   mounted: function() {
-    if (this.$route.query.transactionHash) {
-      this.query.transactionHash = this.$route.query.transactionHash
-      this.searchKey = this.query.transactionHash
+    if (this.$route.query.transHash) {
+      this.searchKey = this.$route.query.transHash
+    }
+    if (this.$route.query.transFrom) {
+      this.searchKey = this.$route.query.transFrom
     }
     if (this.$route.query.blockNumber) {
-      this.query.blockNumber = this.$route.query.blockNumber
-      this.searchKey = this.query.blockNumber
+      this.searchKey = this.$route.query.blockNumber
     }
-    this.getTransactionList()
+    this.onSearch()
   },
   methods: {
     onSearch() {
       this.query.transactionHash = undefined
+      this.query.transactionFrom = undefined
       this.query.blockNumber = undefined
       if (this.searchKey) {
         if (this.searchKey.length === 66) {
           this.query.transactionHash = this.searchKey
+        } else if (this.searchKey.length === 42) {
+          this.query.transactionFrom = this.searchKey
         } else {
           this.query.blockNumber = this.searchKey
         }
@@ -112,7 +114,7 @@ export default {
         Toast('复制成功！')
       })
     },
-    linkTransaction(val) {
+    linkHash(val) {
       this.$router.push({
         path: '/transDetail',
         query: {
@@ -120,15 +122,9 @@ export default {
         }
       })
     },
-    splitAddress(val) {
-      if (!val) return
-      let startStr = ''
-      let endStr = ''
-      let str = ''
-      startStr = val.substring(0, 12)
-      endStr = val.substring(val.length - 6)
-      str = `${startStr}...${endStr}`
-      return str
+    linkFrom(val) {
+      this.searchKey = val
+      this.onSearch()
     }
   }
 };

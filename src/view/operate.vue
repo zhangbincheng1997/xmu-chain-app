@@ -3,7 +3,7 @@
     <van-nav-bar :title="'溯源码：' + code" left-text="返回" left-arrow @click-left="back()" />
     <van-loading v-if="loading" />
     <van-tabs animated>
-      <van-tab title="生长信息">
+      <van-tab title="生长操作">
         <van-list finished-text="没有更多了">
           <van-cell-group v-for="(item, i) in growList" :key="i" :title="'# ' + (i+1) + ': ' + item.createTime">
             <van-image :src="item.image" />
@@ -11,30 +11,30 @@
             <van-cell title="湿度" :value="item.humidity" />
             <van-cell title="光照" :value="item.light" />
             <van-cell title="备注" :value="item.remark" />
-            <van-cell title="用户地址" :value="item.fromAddr" is-link :to="'userDetail?address='+item.fromAddr" />
             <van-cell title="交易哈希" :value="item.transHash" is-link :to="'transDetail?transHash='+item.transHash" />
+            <van-cell title="发送方" :value="item.transFrom" is-link :to="'browser?transFrom='+item.transFrom" />
           </van-cell-group>
         </van-list>
       </van-tab>
-      <van-tab title="农事信息">
+      <van-tab title="农事操作">
         <van-list finished-text="没有更多了">
           <van-cell-group v-for="(item, i) in farmList" :key="i" :title="'# ' + (i+1) + ': ' + item.createTime">
             <van-image :src="item.image" />
             <van-cell title="内容" :value="item.content" />
             <van-cell title="备注" :value="item.remark" />
-            <van-cell title="用户地址" :value="item.fromAddr" is-link :to="'userDetail?address='+item.fromAddr" />
             <van-cell title="交易哈希" :value="item.transHash" is-link :to="'transDetail?transHash='+item.transHash" />
+            <van-cell title="发送方" :value="item.transFrom" is-link :to="'browser?transFrom='+item.transFrom" />
           </van-cell-group>
         </van-list>
       </van-tab>
-      <van-tab title="加工信息">
+      <van-tab title="加工操作">
         <van-list finished-text="没有更多了">
           <van-cell-group v-for="(item, i) in processList" :key="i" :title="'# ' + (i+1) + ': ' + item.createTime">
             <van-image :src="item.image" />
             <van-cell title="内容" :value="item.content" />
             <van-cell title="备注" :value="item.remark" />
-            <van-cell title="用户地址" :value="item.fromAddr" is-link :to="'userDetail?address='+item.fromAddr" />
             <van-cell title="交易哈希" :value="item.transHash" is-link :to="'transDetail?transHash='+item.transHash" />
+            <van-cell title="发送方" :value="item.transFrom" is-link :to="'browser?transFrom='+item.transFrom" />
           </van-cell-group>
         </van-list>
       </van-tab>
@@ -53,7 +53,7 @@ import {
   Tab,
   Tabs
 } from 'vant';
-import { listGrow, listFarm, listProcess } from '../api/trace'
+import { listGrowByCode, listFarmByCode, listProcessByCode } from '../api/trace'
 
 export default {
   components: {
@@ -81,9 +81,9 @@ export default {
   methods: {
     init() {
       Promise.all([
-        listGrow(this.code).then(res => { this.growList = res.data }),
-        listFarm(this.code).then(res => { this.farmList = res.data }),
-        listProcess(this.code).then(res => { this.processList = res.data }),
+        listGrowByCode(this.code).then(res => { this.growList = res.data }),
+        listFarmByCode(this.code).then(res => { this.farmList = res.data }),
+        listProcessByCode(this.code).then(res => { this.processList = res.data }),
       ]).then(() => {
         this.loading = false
       })

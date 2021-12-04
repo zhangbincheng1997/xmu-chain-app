@@ -11,8 +11,8 @@
           <van-cell title="价格" :value="productTemplate.price" />
           <van-cell title="重量" :value="productTemplate.weight" />
           <van-cell title="过期时间" :value="productTemplate.exp" />
-          <van-cell title="用户地址" :value="productTemplate.fromAddr" is-link :to="'userDetail?address='+productTemplate.fromAddr" />
           <van-cell title="交易哈希" :value="productTemplate.transHash" is-link :to="'transDetail?transHash='+productTemplate.transHash" />
+          <van-cell title="发送方" :value="productTemplate.transFrom" is-link :to="'browser?transFrom='+productTemplate.transFrom" />
         </van-cell-group>
       </van-tab>
       <van-tab title="产地信息">
@@ -23,8 +23,8 @@
           <van-cell title="介绍" :value="placeTemplate.content" />
           <van-cell title="面积" :value="placeTemplate.area" />
           <van-cell title="海拔" :value="placeTemplate.altitude" />
-          <van-cell title="用户地址" :value="placeTemplate.fromAddr" is-link :to="'userDetail?address='+placeTemplate.fromAddr" />
           <van-cell title="交易哈希" :value="placeTemplate.transHash" is-link :to="'transDetail?transHash='+placeTemplate.transHash" />
+          <van-cell title="发送方" :value="placeTemplate.transFrom" is-link :to="'browser?transFrom='+placeTemplate.transFrom" />
         </van-cell-group>
       </van-tab>
       <van-tab title="地块信息">
@@ -33,8 +33,8 @@
           <van-cell title="名称" :value="plotTemplate.name" />
           <van-cell title="土壤类型" :value="plotTemplate.soilType" />
           <van-cell title="土壤酸碱度" :value="plotTemplate.soilPh" />
-          <van-cell title="用户地址" :value="plotTemplate.fromAddr" is-link :to="'userDetail?address='+plotTemplate.fromAddr" />
           <van-cell title="交易哈希" :value="plotTemplate.transHash" is-link :to="'transDetail?transHash='+plotTemplate.transHash" />
+          <van-cell title="发送方" :value="plotTemplate.transFrom" is-link :to="'browser?transFrom='+plotTemplate.transFrom" />
         </van-cell-group>
       </van-tab>
       <van-tab title="企业信息">
@@ -51,6 +51,8 @@
           <van-cell title="注册资本" :value="companyInfo.registerCapital" />
           <van-cell title="营业范围" :value="companyInfo.businessScope" />
           <van-image :src="companyInfo.businessLicense" />
+          <van-cell title="交易哈希" :value="companyInfo.transHash" is-link :to="'transDetail?transHash='+companyInfo.transHash" />
+          <van-cell title="发送方" :value="companyInfo.transFrom" is-link :to="'browser?transFrom='+companyInfo.transFrom" />
         </van-cell-group>
       </van-tab>
     </van-tabs>
@@ -67,9 +69,9 @@ import {
   Tab,
   Tabs
 } from 'vant';
-import { getCompany } from '../api/admin'
-import { getProduct, getPlace, getPlot } from '../api/template'
-import { getAdmin } from '../api/trace'
+import { getCompanyId } from '../api/admin'
+import { getProductById, getPlaceById, getPlotById } from '../api/template'
+import { getInfoByCode } from '../api/trace'
 
 export default {
   components: {
@@ -98,13 +100,13 @@ export default {
   methods: {
     init() {
       this.loading = true
-      getAdmin(this.code).then(res => {
+      getInfoByCode(this.code).then(res => {
         this.template = res.data
         Promise.all([
-          getCompany(this.template.companyId).then(res => { this.companyInfo = res.data }),
-          getProduct(this.template.productId).then(res => { this.productTemplate = res.data }),
-          getPlace(this.template.placeId).then(res => { this.placeTemplate = res.data }),
-          getPlot(this.template.plotId).then(res => { this.plotTemplate = res.data })
+          getCompanyId(this.template.companyId).then(res => { this.companyInfo = res.data }),
+          getProductById(this.template.productId).then(res => { this.productTemplate = res.data }),
+          getPlaceById(this.template.placeId).then(res => { this.placeTemplate = res.data }),
+          getPlotById(this.template.plotId).then(res => { this.plotTemplate = res.data })
         ]).then(() => {
           this.loading = false
         })

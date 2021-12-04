@@ -19,19 +19,19 @@ const routes = [
     name: 'info',
     component: () => import('./view/info'),
     meta: {
-      title: 'XMU-基本信息'
+      title: 'XMU-信息上链'
     }
   },
   {
     name: 'operate',
     component: () => import('./view/operate'),
     meta: {
-      title: 'XMU-溯源情况'
+      title: 'XMU-操作上链'
     }
   },
   {
-    name: 'check',
-    component: () => import('./view/check'),
+    name: 'security',
+    component: () => import('./view/security'),
     meta: {
       title: 'XMU-防伪查询'
     }
@@ -48,13 +48,6 @@ const routes = [
     component: () => import('./view/transDetail'),
     meta: {
       title: 'XMU-交易详情'
-    }
-  },
-  {
-    name: 'userDetail',
-    component: () => import('./view/userDetail'),
-    meta: {
-      title: 'XMU-用户详情'
     }
   }
 ];

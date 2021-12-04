@@ -51,9 +51,9 @@ export default {
         'http://qiniu.littleredhat1997.com/xmu/chain-bg.png'
       ],
       traceHead: [
-        { text: '基本信息', icon: 'http://qiniu.littleredhat1997.com/xmu/info.png', to: '/info' },
-        { text: '溯源操作', icon: 'http://qiniu.littleredhat1997.com/xmu/operate.png', to: '/operate' },
-        { text: '防伪查询', icon: 'http://qiniu.littleredhat1997.com/xmu/check.png', to: '/check' },
+        { text: '链上信息', icon: 'http://qiniu.littleredhat1997.com/xmu/info.png', to: '/info' },
+        { text: '链上操作', icon: 'http://qiniu.littleredhat1997.com/xmu/operate.png', to: '/operate' },
+        { text: '防伪查询', icon: 'http://qiniu.littleredhat1997.com/xmu/security.png', to: '/security' },
         { text: '区块链浏览器', icon: 'http://qiniu.littleredhat1997.com/xmu/browser.png', to: '/browser' },
         { text: '联系客服', icon: 'http://qiniu.littleredhat1997.com/xmu/wechat.png', click: this.wechat },
         { text: '官方网站', icon: 'http://qiniu.littleredhat1997.com/xmu/website.jpg', url: 'https://www.pzcnet.com/home' },

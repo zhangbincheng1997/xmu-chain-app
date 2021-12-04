@@ -5,23 +5,24 @@
     <van-tabs animated>
       <van-tab title="交易回执">
         <van-cell-group>
-          <van-cell title="blockHash" :value="receipt.blockHash" />
-          <van-cell title="blockNumber" :value="receipt.blockNumber" />
-          <van-cell title="gasUsed" :value="receipt.gasUsed" />
-          <van-cell title="contractAddress" :value="receipt.contractAddress" />
-          <van-cell title="from" :value="receipt.from" />
-          <van-cell title="to" :value="receipt.to" />
-          <van-cell title="transactionHash" :value="receipt.transactionHash" />
-          <van-cell title="transactionIndex" :value="receipt.transactionIndex" />
-          <van-cell title="status" :value="receipt.status" />
+          <van-cell title="交易哈希" :value="receipt.transactionHash" />
+          <van-cell title="交易序号" :value="receipt.transactionIndex | parseInt" />
+          <van-cell title="交易状态" :value="receipt.status | parseStatus" />
+          <van-cell title="区块哈希" :value="receipt.blockHash" />
+          <van-cell title="区块高度" :value="receipt.blockNumber | parseInt" />
+          <van-cell title="燃料消耗" :value="receipt.gasUsed | parseInt" />
+          <van-cell title="合约地址" :value="receipt.contractAddress" />
+          <van-cell title="状态根" :value="receipt.root" />
+          <van-cell title="发送方" :value="receipt.from" />
+          <van-cell title="接收方" :value="receipt.to" />
         </van-cell-group>
       </van-tab>
       <van-tab title="解码">
         <van-cell-group>
-          <van-cell title="type" :value="result.type" /><!-- deploy部署 / transaction交易 -->
-          <van-cell title="input" :value="receipt.input" @click="decodeInputClick" clickable />
-          <van-cell title="output" :value="receipt.output" @click="decodeOutputClick" clickable />
-          <van-cell v-for="(item, i) in receipt.logs" :key="i" :title="'logs' + i" :value="JSON.stringify(item)" @click="decodeLogClick(i)" clickable />
+          <van-cell title="类型" :value="result.type" /><!-- deploy部署 / transaction交易 -->
+          <van-cell title="输入" :value="receipt.input" @click="decodeInputClick" clickable />
+          <van-cell title="输出" :value="receipt.output" @click="decodeOutputClick" clickable />
+          <van-cell v-for="(item, i) in receipt.logs" :key="i" :title="'事件' + i" :value="JSON.stringify(item)" @click="decodeLogClick(i)" clickable />
         </van-cell-group>
       </van-tab>
     </van-tabs>
@@ -63,11 +64,22 @@ export default {
     [Tab.name]: Tab,
     [Tabs.name]: Tabs
   },
+  filters: {
+    parseInt: function (value) {
+      if (!value) return ''
+      return parseInt(value)
+    },
+    parseStatus: function (value) {
+      if (!value) return ''
+      const status = parseInt(value)
+      return status === 0 ? '正常' : status
+    }
+  },
   data() {
     return {
       transHash: this.$route.query.transHash,
-      receipt: [],
-      result: [],
+      receipt: {},
+      result: {},
       loading: true,
       // 解码结果
       isOk: false,
