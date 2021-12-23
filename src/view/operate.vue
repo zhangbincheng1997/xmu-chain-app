@@ -6,7 +6,7 @@
       <van-tab title="生长操作">
         <van-list finished-text="没有更多了">
           <van-cell-group v-for="(item, i) in growList" :key="i" :title="'# ' + (i+1) + ': ' + item.createTime">
-            <van-image :src="item.image" />
+            <image-preview :image="item.image" />
             <van-cell title="温度" :value="item.temperature" />
             <van-cell title="湿度" :value="item.humidity" />
             <van-cell title="光照" :value="item.light" />
@@ -19,7 +19,7 @@
       <van-tab title="农事操作">
         <van-list finished-text="没有更多了">
           <van-cell-group v-for="(item, i) in farmList" :key="i" :title="'# ' + (i+1) + ': ' + item.createTime">
-            <van-image :src="item.image" />
+            <image-preview :image="item.image" />
             <van-cell title="内容" :value="item.content" />
             <van-cell title="备注" :value="item.remark" />
             <van-cell title="交易哈希" :value="item.transHash" is-link :to="'transDetail?transHash='+item.transHash" />
@@ -30,7 +30,7 @@
       <van-tab title="加工操作">
         <van-list finished-text="没有更多了">
           <van-cell-group v-for="(item, i) in processList" :key="i" :title="'# ' + (i+1) + ': ' + item.createTime">
-            <van-image :src="item.image" />
+            <image-preview :image="item.image" />
             <van-cell title="内容" :value="item.content" />
             <van-cell title="备注" :value="item.remark" />
             <van-cell title="交易哈希" :value="item.transHash" is-link :to="'transDetail?transHash='+item.transHash" />
@@ -46,7 +46,6 @@
 import {
   Cell,
   CellGroup,
-  Image,
   List,
   Loading,
   NavBar,
@@ -59,7 +58,6 @@ export default {
   components: {
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup,
-    [Image.name]: Image,
     [List.name]: List,
     [Loading.name]: Loading,
     [NavBar.name]: NavBar,

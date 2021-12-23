@@ -9,23 +9,44 @@ export function getInfoByCode(code) {
     })
 }
 
+export function getProductById(id) {
+    return request({
+        url: API + '/product/' + id,
+        method: 'get'
+    })
+}
+
+export function getPlaceById(id) {
+    return request({
+        url: API + '/place/' + id,
+        method: 'get'
+    })
+}
+
+export function getPlotById(id) {
+    return request({
+        url: API + '/plot/' + id,
+        method: 'get'
+    })
+}
+
 export function listGrowByCode(code) {
     return request({
-        url: API + '/grow/list/' + code,
+        url: API + '/op/grow/list/' + code,
         method: 'get'
     })
 }
 
 export function listFarmByCode(code) {
     return request({
-        url: API + '/farm/list/' + code,
+        url: API + '/op/farm/list/' + code,
         method: 'get'
     })
 }
 
 export function listProcessByCode(code) {
     return request({
-        url: API + '/process/list/' + code,
+        url: API + '/op/process/list/' + code,
         method: 'get'
     })
 }

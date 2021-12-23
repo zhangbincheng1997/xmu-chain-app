@@ -5,7 +5,7 @@
     <van-tabs animated>
       <van-tab title="商品信息">
         <van-cell-group>
-          <van-image :src="productTemplate.image" />
+          <image-preview :image="productTemplate.image" />
           <van-cell title="名称" :value="productTemplate.name" />
           <van-cell title="介绍" :value="productTemplate.content" />
           <van-cell title="价格" :value="productTemplate.price" />
@@ -17,7 +17,7 @@
       </van-tab>
       <van-tab title="产地信息">
         <van-cell-group>
-          <van-image :src="placeTemplate.image" />
+          <image-preview :image="placeTemplate.image" />
           <van-cell title="名称" :value="placeTemplate.name" />
           <van-cell title="地址" :value="placeTemplate.address" />
           <van-cell title="介绍" :value="placeTemplate.content" />
@@ -29,7 +29,7 @@
       </van-tab>
       <van-tab title="地块信息">
         <van-cell-group>
-          <van-image :src="plotTemplate.image" />
+          <image-preview :image="plotTemplate.image" />
           <van-cell title="名称" :value="plotTemplate.name" />
           <van-cell title="土壤类型" :value="plotTemplate.soilType" />
           <van-cell title="土壤酸碱度" :value="plotTemplate.soilPh" />
@@ -39,7 +39,7 @@
       </van-tab>
       <van-tab title="企业信息">
         <van-cell-group>
-          <van-image :src="companyInfo.logo" />
+          <image-preview :image="companyInfo.logo" />
           <van-cell title="名称" :value="companyInfo.name" />
           <van-cell title="法人" :value="companyInfo.legalPerson" />
           <van-cell title="联系人" :value="companyInfo.contactPerson" />
@@ -50,7 +50,7 @@
           <van-cell title="注册号码" :value="companyInfo.registerNumber" />
           <van-cell title="注册资本" :value="companyInfo.registerCapital" />
           <van-cell title="营业范围" :value="companyInfo.businessScope" />
-          <van-image :src="companyInfo.businessLicense" />
+          <image-preview :image="companyInfo.businessLicense" />
           <van-cell title="交易哈希" :value="companyInfo.transHash" is-link :to="'transDetail?transHash='+companyInfo.transHash" />
           <van-cell title="发送方" :value="companyInfo.transFrom" is-link :to="'browser?transFrom='+companyInfo.transFrom" />
         </van-cell-group>
@@ -63,21 +63,18 @@
 import {
   Cell,
   CellGroup,
-  Image,
   Loading,
   NavBar,
   Tab,
   Tabs
 } from 'vant';
 import { getCompanyId } from '../api/admin'
-import { getProductById, getPlaceById, getPlotById } from '../api/template'
-import { getInfoByCode } from '../api/trace'
+import { getInfoByCode, getProductById, getPlaceById, getPlotById } from '../api/trace'
 
 export default {
   components: {
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup,
-    [Image.name]: Image,
     [Loading.name]: Loading,
     [NavBar.name]: NavBar,
     [Tab.name]: Tab,
@@ -103,10 +100,10 @@ export default {
       getInfoByCode(this.code).then(res => {
         this.template = res.data
         Promise.all([
-          getCompanyId(this.template.companyId).then(res => { this.companyInfo = res.data }),
           getProductById(this.template.productId).then(res => { this.productTemplate = res.data }),
           getPlaceById(this.template.placeId).then(res => { this.placeTemplate = res.data }),
-          getPlotById(this.template.plotId).then(res => { this.plotTemplate = res.data })
+          getPlotById(this.template.plotId).then(res => { this.plotTemplate = res.data }),
+          getCompanyId(this.template.companyId).then(res => { this.companyInfo = res.data })
         ]).then(() => {
           this.loading = false
         })
