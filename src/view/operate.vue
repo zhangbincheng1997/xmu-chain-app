@@ -7,13 +7,15 @@
         <van-swipe>
           <van-swipe-item v-for="(item, i) in growList" :key="i">
             <image-preview :image="item.image" />
-            <van-cell title="温度" :value="item.temperature" />
-            <van-cell title="湿度" :value="item.humidity" />
-            <van-cell title="光照" :value="item.light" />
-            <van-cell title="备注" :value="item.remark" />
-            <van-cell title="时间" :value="item.createTime" />
-            <van-cell title="交易哈希" :value="item.transHash" is-link :to="'transDetail?transHash='+item.transHash" />
-            <van-cell title="发送方" :value="item.transFrom" is-link :to="'browser?transFrom='+item.transFrom" />
+            <van-cell-group>
+              <van-cell title="温度" :value="item.temperature" />
+              <van-cell title="湿度" :value="item.humidity" />
+              <van-cell title="光照" :value="item.light" />
+              <van-cell title="备注" :value="item.remark" />
+              <van-cell title="时间" :value="item.createTime" />
+              <van-cell title="交易哈希" :value="item.transHash" is-link :to="'transDetail?transHash='+item.transHash" />
+              <van-cell title="发送方" :value="item.transFrom" is-link :to="'browser?transFrom='+item.transFrom" />
+            </van-cell-group>
           </van-swipe-item>
         </van-swipe>
       </van-tab>
@@ -21,11 +23,13 @@
         <van-swipe>
           <van-swipe-item v-for="(item, i) in farmList" :key="i">
             <image-preview :image="item.image" />
-            <van-cell title="内容" :value="item.content" />
-            <van-cell title="备注" :value="item.remark" />
-            <van-cell title="时间" :value="item.createTime" />
-            <van-cell title="交易哈希" :value="item.transHash" is-link :to="'transDetail?transHash='+item.transHash" />
-            <van-cell title="发送方" :value="item.transFrom" is-link :to="'browser?transFrom='+item.transFrom" />
+            <van-cell-group>
+              <van-cell title="内容" :value="item.content" />
+              <van-cell title="备注" :value="item.remark" />
+              <van-cell title="时间" :value="item.createTime" />
+              <van-cell title="交易哈希" :value="item.transHash" is-link :to="'transDetail?transHash='+item.transHash" />
+              <van-cell title="发送方" :value="item.transFrom" is-link :to="'browser?transFrom='+item.transFrom" />
+            </van-cell-group>
           </van-swipe-item>
         </van-swipe>
       </van-tab>
@@ -33,11 +37,13 @@
         <van-swipe>
           <van-swipe-item v-for="(item, i) in processList" :key="i">
             <image-preview :image="item.image" />
-            <van-cell title="内容" :value="item.content" />
-            <van-cell title="备注" :value="item.remark" />
-            <van-cell title="时间" :value="item.createTime" />
-            <van-cell title="交易哈希" :value="item.transHash" is-link :to="'transDetail?transHash='+item.transHash" />
-            <van-cell title="发送方" :value="item.transFrom" is-link :to="'browser?transFrom='+item.transFrom" />
+            <van-cell-group>
+              <van-cell title="内容" :value="item.content" />
+              <van-cell title="备注" :value="item.remark" />
+              <van-cell title="时间" :value="item.createTime" />
+              <van-cell title="交易哈希" :value="item.transHash" is-link :to="'transDetail?transHash='+item.transHash" />
+              <van-cell title="发送方" :value="item.transFrom" is-link :to="'browser?transFrom='+item.transFrom" />
+            </van-cell-group>
           </van-swipe-item>
         </van-swipe>
       </van-tab>
@@ -48,6 +54,7 @@
 <script>
 import {
   Cell,
+  CellGroup,
   Loading,
   NavBar,
   Swipe,
@@ -60,6 +67,7 @@ import { listGrowByCode, listFarmByCode, listProcessByCode } from '../api/trace'
 export default {
   components: {
     [Cell.name]: Cell,
+    [CellGroup.name]: CellGroup,
     [Loading.name]: Loading,
     [NavBar.name]: NavBar,
     [Swipe.name]: Swipe,
@@ -81,6 +89,7 @@ export default {
   },
   methods: {
     init() {
+      this.loading = true
       Promise.all([
         listGrowByCode(this.code).then(res => { this.growList = res.data }),
         listFarmByCode(this.code).then(res => { this.farmList = res.data }),

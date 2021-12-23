@@ -88,7 +88,7 @@ export default {
       placeTemplate: {},
       plotTemplate: {},
       companyInfo: {},
-      loading: true
+      loading: false
     };
   },
   mounted() {
