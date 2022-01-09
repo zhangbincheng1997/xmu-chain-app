@@ -6,48 +6,13 @@ Vue.use(Router);
 const routes = [
   {
     path: '*',
-    redirect: '/home'
+    redirect: '/'
   },
   {
-    name: 'home',
-    component: () => import('./view/home'),
+    name: '',
+    component: () => import('./view/index'),
     meta: {
       title: 'XMU-食品溯源'
-    }
-  },
-  {
-    name: 'info',
-    component: () => import('./view/info'),
-    meta: {
-      title: 'XMU-信息上链'
-    }
-  },
-  {
-    name: 'operate',
-    component: () => import('./view/operate'),
-    meta: {
-      title: 'XMU-操作上链'
-    }
-  },
-  {
-    name: 'security',
-    component: () => import('./view/security'),
-    meta: {
-      title: 'XMU-防伪查询'
-    }
-  },
-  {
-    name: 'browser',
-    component: () => import('./view/browser'),
-    meta: {
-      title: 'XMU-区块链浏览器'
-    }
-  },
-  {
-    name: 'transDetail',
-    component: () => import('./view/transDetail'),
-    meta: {
-      title: 'XMU-交易详情'
     }
   }
 ];
