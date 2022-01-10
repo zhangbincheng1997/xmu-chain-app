@@ -13,3 +13,13 @@ export function trace(companyId, batchNo, code) {
         }
     })
 }
+
+export function verify(txId) {
+    return request({
+        url: API + '/verify',
+        method: 'get',
+        params: {
+            txId: txId
+        }
+    })
+}
