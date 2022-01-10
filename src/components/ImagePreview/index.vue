@@ -1,6 +1,5 @@
 <template>
-<!--  <van-image v-if="image" :src="ipfsImage" :width="width" :height="height" @click="preview" />-->
-  <van-image v-if="image" :src="ipfsImage" :style="style" @click="preview" />
+    <van-image v-if="image" :src="ipfsImage" :width="width" :height="height" @click="preview" />
 </template>
 
 <script>
@@ -20,20 +19,12 @@ export default {
       default: ''
     },
     width: {
-      type: String,
-      default: ''
+      type: Number,
+      require: false
     },
     height: {
-      type: String,
-      default: ''
-    }
-  },
-  data() {
-    return {
-      style: {
-        width: this.width,
-        height: this.height
-      }
+      type: Number,
+      require: false
     }
   },
   computed: {

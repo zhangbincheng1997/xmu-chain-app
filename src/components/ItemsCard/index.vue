@@ -6,17 +6,17 @@
         <van-field v-for="(item, i) in items.content" :key="i" :label="item.title">
           <template #input>
             <span v-if="item.type === 'text'">{{ item.value }}</span>
-            <img v-if="item.type === 'image'" :src="IPFS_GATEWAY + '/' + item.value" :style="style" alt="">
-            <video v-if="item.type === 'video'" controls><source :src="IPFS_GATEWAY + '/' + item.value"></video>
-            <audio v-if="item.type === 'audio'" controls><source :src="IPFS_GATEWAY + '/' + item.value"></audio>
+            <ImagePreview v-if="item.type === 'image'" :image="item.value" :width="200" />
+            <video v-if="item.type === 'video'" controls style="width: 200px;"><source :src="IPFS_GATEWAY + '/' + item.value"></video>
+            <audio v-if="item.type === 'audio'" controls style="width: 200px;"><source :src="IPFS_GATEWAY + '/' + item.value"></audio>
             <a v-if="item.type === 'file'" :href="IPFS_GATEWAY + '/' + item.value" download>{{ item.value }}</a>
           </template>
         </van-field>
       </van-form>
     </van-cell>
-    <van-cell>
+    <van-cell is-link to="index">
       <van-tag v-if="items.txId" type="success" plain round>
-        <van-icon name="lock" />已上链：{{ items.txId.substring(0, 40) + '...' }}
+        <van-icon name="lock" />已上链：{{ items.txId.substring(0, 36) + '...' }}
       </van-tag>
     </van-cell>
   </van-cell-group>
@@ -31,6 +31,7 @@ import {
   Field,
   Tag
 } from 'vant';
+import ImagePreview from '../ImagePreview'
 
 export default {
   name: 'ItemsCard',
@@ -40,28 +41,13 @@ export default {
     [Icon.name]: Icon,
     [Form.name]: Form,
     [Field.name]: Field,
-    [Tag.name]: Tag
+    [Tag.name]: Tag,
+    ImagePreview
   },
   props: {
     items: {
       type: Object,
       required: true
-    },
-    width: {
-      type: String,
-      default: '100px'
-    },
-    height: {
-      type: String,
-      default: '100px'
-    }
-  },
-  data() {
-    return {
-      style: {
-        width: this.width,
-        height: this.height
-      }
     }
   }
 }

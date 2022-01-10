@@ -6,19 +6,9 @@ import { router } from './router';
 import VueClipboard from 'vue-clipboard2'
 Vue.use(VueClipboard)
 
-// 全局组件挂载
-import ImagePreview from './components/ImagePreview'
-Vue.component('ImagePreview', ImagePreview)
-
 // 全局变量注册
 import global from './utils/global'
 Vue.use(global)
-
-// 全局方法注册
-import * as utils from './utils/utils'
-Object.keys(utils).forEach(key => {
-  Vue.prototype[key] = utils[key]
-})
 
 new Vue({
   router,

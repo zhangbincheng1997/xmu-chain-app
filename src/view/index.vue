@@ -1,13 +1,23 @@
 <template>
   <div>
     <van-nav-bar :title="data.batchNo" />
-    <van-swipe :autoplay="3000">
-      <van-swipe-item v-for="image in images" :key="image">
-        <img :src="image" alt="" style="width: 100%;">
-      </van-swipe-item>
-    </van-swipe>
+    <van-image :src="bg" />
     <van-divider />
-    <van-cell-group v-if="visible" inset>
+    <van-cell-group v-if="data.history" inset>
+      <van-cell>
+        <van-tag v-if="data.history.length === 0" type="success" plain round>
+          <van-icon name="good-job" />首次扫码，通过验证！
+        </van-tag>
+        <van-tag v-else type="danger" plain round>
+          <van-icon name="bell" />多次扫码，谨防假冒！
+        </van-tag>
+      </van-cell>
+      <van-cell title="首次扫码时间">{{ data.history.length > 0 ? data.history[0].createTime : '-' }}</van-cell>
+      <van-cell title="首次扫码地点">{{ data.history.length > 0 ? data.history[0].location : '-' }}</van-cell>
+      <van-cell title="扫码记录" is-link to="index">{{ data.history.length }}</van-cell>
+    </van-cell-group>
+    <van-divider />
+    <van-cell-group v-if="data.shop" inset>
       <van-cell title="店铺信息" />
       <van-cell>
         <div style="float: left;">
@@ -51,12 +61,9 @@ import {
   CellGroup,
   Dialog,
   Divider,
-  Grid,
-  GridItem,
-  NavBar,
-  Search,
-  Swipe,
-  SwipeItem
+  Icon,
+  Image,
+  Tag
 } from 'vant';
 import { trace } from '../api/trace'
 import ItemsCard from '../components/ItemsCard'
@@ -68,12 +75,9 @@ export default {
     [CellGroup.name]: CellGroup,
     [Dialog.name]: Dialog,
     [Divider.name]: Divider,
-    [Grid.name]: Grid,
-    [GridItem.name]: GridItem,
-    [NavBar.name]: NavBar,
-    [Search.name]: Search,
-    [Swipe.name]: Swipe,
-    [SwipeItem.name]: SwipeItem,
+    [Icon.name]: Icon,
+    [Image.name]: Image,
+    [Tag.name]: Tag,
     ItemsCard
   },
   data() {
@@ -81,11 +85,8 @@ export default {
       companyId: this.$route.query.companyId,
       batchNo: this.$route.query.batchNo,
       code: this.$route.query.code,
-      images: [
-        'http://qiniu.littleredhat1997.com/xmu/chain-bg.png'
-      ],
-      data: {},
-      visible: false
+      bg: 'http://qiniu.littleredhat1997.com/xmu/chain.png',
+      data: {}
     };
   },
   mounted() {
@@ -99,7 +100,6 @@ export default {
     init() {
       trace(this.companyId, this.batchNo, this.code).then(res => {
         this.data = res.data
-        this.visible = true
       })
     }
   }
