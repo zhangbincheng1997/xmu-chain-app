@@ -14,7 +14,7 @@
       </van-cell>
       <van-cell title="首次扫码时间">{{ data.history.length > 0 ? data.history[0].createTime : '-' }}</van-cell>
       <van-cell title="首次扫码地点">{{ data.history.length > 0 ? data.history[0].location : '-' }}</van-cell>
-      <van-cell title="扫码记录" is-link to="index">{{ data.history.length }}</van-cell>
+      <van-cell title="扫码记录" is-link @click="showHistory = true">{{ data.history.length }} 条</van-cell>
     </van-cell-group>
     <van-divider />
     <van-cell-group v-if="data.shop" inset>
@@ -36,21 +36,17 @@
       <van-divider />
     </div>
 
-<!--    <table style="margin: 0 auto; line-height: 25px">-->
-<!--      <tr><th>块高</th><th>交易哈希</th><th>发送方</th><th>创建时间</th></tr>-->
-<!--      <tr v-for="(item, i) in list" :key="i">-->
-<!--        <td>{{ item.blockNumber }}</td>-->
-<!--        <td>-->
-<!--          <van-icon name="records" @click="copyText(item.transHash)" />-->
-<!--          <span style="color: #0db1c1;" @click="linkHash(item.transHash)">{{ item.transHash | splitAddress }}</span>-->
-<!--        </td>-->
-<!--        <td>-->
-<!--          <van-icon name="records" @click="copyText(item.transHash)" />-->
-<!--          <span style="color: #0db1c1;" @click="linkFrom(item.transFrom)">{{ item.transFrom | splitAddress }}</span>-->
-<!--        </td>-->
-<!--        <td>{{ item.blockTimestamp }}</td>-->
-<!--      </tr>-->
-<!--    </table>-->
+    <van-dialog v-model="showHistory" title="扫码记录" close-on-click-overlay>
+      <div style="text-align: center; line-height: 25px; font-size: small;">
+        <van-row v-for="(item, i) in data.history.slice((query.page-1)*query.limit,query.page*query.limit)" :key="i">
+          <van-col span="2">{{ (query.page-1)*query.limit + i + 1 }}</van-col>
+          <van-col span="6">{{ item.ip }}</van-col>
+          <van-col span="8">{{ item.location }}</van-col>
+          <van-col span="8">{{ item.createTime }}</van-col>
+        </van-row>
+        <van-pagination v-model="query.page" :items-per-page="query.limit" :total-items="data.history.length" />
+      </div>
+    </van-dialog>
   </div>
 </template>
 
@@ -59,10 +55,15 @@ import {
   Button,
   Cell,
   CellGroup,
+  Col,
   Dialog,
   Divider,
   Icon,
   Image,
+  List,
+  NavBar,
+  Pagination,
+  Row,
   Tag
 } from 'vant';
 import { trace } from '../api/trace'
@@ -73,10 +74,15 @@ export default {
     [Button.name]: Button,
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup,
-    [Dialog.name]: Dialog,
+    [Col.name]: Col,
+    [Dialog.Component.name]: Dialog.Component,
     [Divider.name]: Divider,
     [Icon.name]: Icon,
     [Image.name]: Image,
+    [List.name]: List,
+    [NavBar.name]: NavBar,
+    [Pagination.name]: Pagination,
+    [Row.name]: Row,
     [Tag.name]: Tag,
     ItemsCard
   },
@@ -86,7 +92,12 @@ export default {
       batchNo: this.$route.query.batchNo,
       code: this.$route.query.code,
       bg: 'http://qiniu.littleredhat1997.com/xmu/chain.png',
-      data: {}
+      data: {},
+      showHistory: false,
+      query: {
+        page: 1,
+        limit: 10
+      }
     };
   },
   mounted() {
