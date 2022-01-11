@@ -1,5 +1,5 @@
 <template>
-    <van-image v-if="image" :src="ipfsImage" :width="width" :height="height" @click="preview" />
+  <van-image v-if="image" :src="ipfsImage" :style="style" @click="preview" />
 </template>
 
 <script>
@@ -25,6 +25,14 @@ export default {
     height: {
       type: Number,
       require: false
+    }
+  },
+  data() {
+    return {
+      style: {
+        width: this.width + 'px',
+        height: this.height + 'px'
+      }
     }
   },
   computed: {

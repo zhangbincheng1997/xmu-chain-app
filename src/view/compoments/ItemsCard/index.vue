@@ -7,7 +7,7 @@
           <van-field v-for="(item, i) in items.content" :key="i" :label="item.title">
             <template #input>
               <span v-if="item.type === 'text'">{{ item.value }}</span>
-              <ImagePreview v-if="item.type === 'image'" :image="item.value" :width="200" />
+              <image-preview v-if="item.type === 'image'" :image="item.value" :width="200" />
               <video v-if="item.type === 'video'" controls style="width: 200px;"><source :src="IPFS_GATEWAY + '/' + item.value"></video>
               <audio v-if="item.type === 'audio'" controls style="width: 200px;"><source :src="IPFS_GATEWAY + '/' + item.value"></audio>
               <a v-if="item.type === 'file'" :href="IPFS_GATEWAY + '/' + item.value" download>{{ item.value }}</a>

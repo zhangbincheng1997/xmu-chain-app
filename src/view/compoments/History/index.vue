@@ -2,12 +2,14 @@
   <div>
     <van-cell-group inset>
       <van-cell>
-        <van-tag v-if="history.length === 0" type="success" plain round>
-          <van-icon name="good-job" />首次扫码，正品认证！
-        </van-tag>
-        <van-tag v-else type="danger" plain round>
-          <van-icon name="bell" />多次扫码，谨防假冒！
-        </van-tag>
+        <template #title>
+          <van-tag v-if="history.length === 0" type="success" plain round>
+            <van-icon name="good-job" />首次扫码，正品认证！
+          </van-tag>
+          <van-tag v-else type="danger" plain round>
+            <van-icon name="bell" />多次扫码，谨防假冒！
+          </van-tag>
+        </template>
       </van-cell>
       <van-cell title="首次扫码时间">{{ history.length > 0 ? history[0].createTime : '-' }}</van-cell>
       <van-cell title="首次扫码地点">{{ history.length > 0 ? history[0].location : '-' }}</van-cell>
