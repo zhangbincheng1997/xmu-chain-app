@@ -24,7 +24,7 @@
 
     <van-dialog v-model="show" title="保全证书" close-on-click-overlay>
       <div style="text-align: center;">
-        <img id="image" src="" alt="" style="height: 400px">
+        <img id="image" src="" alt="" height="400px">
       </div>
     </van-dialog>
   </div>
@@ -40,8 +40,8 @@ import {
   Field,
   Tag,
 } from 'vant';
-import { verify } from '../../api/trace'
-import ImagePreview from '../ImagePreview'
+import { verify } from '../../../api/trace'
+import ImagePreview from '../../../components/ImagePreview'
 
 export default {
   name: 'ItemsCard',
@@ -68,39 +68,46 @@ export default {
   },
   methods: {
     showClick() {
-      this.show = true
-      this.$nextTick(() => {
-        verify(this.items.txId).then(res => {
-          const { evidenceHash, txId, blockHeight, blockTime } = res.data
-          this.draw(evidenceHash, txId, blockHeight, blockTime)
+      verify(this.items.txId).then(res => {
+        this.show = true
+        this.$nextTick(() => {
+          this.load(res.data)
         })
       })
     },
-    draw(evidenceHash, txId, blockHeight, blockTime) {
-      let image = document.getElementById('image');
-      let canvas = document.createElement('canvas')
-      let ctx = canvas.getContext('2d')
+    load(data) {
+      let image = document.getElementById('image')
       let img = new Image()
-      img.src = require('../../images/evidence.jpg')
+      img.src = require('../../../images/evidence.jpg')
       img.onload = () => {
-        canvas.width = img.width
-        canvas.height = img.height
-        ctx.drawImage(img, 0, 0, img.width, img.height)
-        ctx.fillStyle = '#000'
-        // 上
-        ctx.font = '48px bold Microsoft YaHei'
-        ctx.fillText(evidenceHash.substring(0, 48), 800, 1050)
-        ctx.fillText(evidenceHash.substring(48), 800, 1100)
-        ctx.fillText(txId.substring(0, 48), 800, 1250)
-        ctx.fillText(txId.substring(48), 800, 1300)
-        // 下
-        ctx.font = '36px Microsoft YaHei'
-        ctx.fillText('0x9bd3ae811324424bf3a29fcca7a9a317b735e869 ', 800, 1520)
-        ctx.fillText('食品溯源', 800, 1620)
-        ctx.fillText(blockTime, 800, 1720)
-        ctx.fillText('XMU-CHAIN', 800, 1880)
-        image.src = canvas.toDataURL('image/jpg')
+        image.src = this.draw(img, data)
       }
+    },
+    draw(img, data) {
+      const { width, height } = img
+      const { evidenceHash, txId, blockHeight, blockTime } = data
+      // 画布
+      let canvas = document.createElement('canvas')
+      canvas.width = width
+      canvas.height = height
+      // 上下文
+      let ctx = canvas.getContext('2d')
+      ctx.drawImage(img, 0, 0, width, height)
+      ctx.fillStyle = '#000'
+      // 上
+      ctx.font = '48px bold Microsoft YaHei'
+      ctx.fillText(evidenceHash.substring(0, 48), 800, 1050)
+      ctx.fillText(evidenceHash.substring(48), 800, 1100)
+      ctx.fillText(txId.substring(0, 48), 800, 1250)
+      ctx.fillText(txId.substring(48), 800, 1300)
+      // 下
+      ctx.font = '36px Microsoft YaHei'
+      ctx.fillText('0x9bd3ae811324424bf3a29fcca7a9a317b735e869 ', 800, 1520)
+      ctx.fillText('食品溯源', 800, 1620)
+      ctx.fillText(blockTime, 800, 1720)
+      ctx.fillText(blockHeight, 800, 1880)
+      // data:image/jpeg;base64,
+      return canvas.toDataURL('image/jpeg')
     }
   }
 }
