@@ -48,7 +48,7 @@ export default {
     // debug
     if (!this.companyId) this.companyId = '1'
     if (!this.batchNo) this.batchNo = '202201010001'
-    if (!this.code) this.code = '7939a62e5da64a5cb13025bb5fbafbc8'
+    if (!this.code) this.code = '00000000000000000000000000000000'
     this.init()
   },
   methods: {
