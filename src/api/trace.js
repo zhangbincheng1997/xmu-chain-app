@@ -14,9 +14,9 @@ export function trace(companyId, batchNo, code) {
     })
 }
 
-export function verify(txId) {
+export function query(txId) {
     return request({
-        url: API + '/verify',
+        url: API + '/query',
         method: 'get',
         params: {
             txId: txId

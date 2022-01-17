@@ -40,7 +40,7 @@ import {
   Field,
   Tag,
 } from 'vant';
-import { verify } from '../../../api/trace'
+import { query } from '../../../api/trace'
 import ImagePreview from '../../../components/ImagePreview'
 
 export default {
@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     showClick() {
-      verify(this.items.txId).then(res => {
+      query(this.items.txId).then(res => {
         this.show = true
         this.$nextTick(() => {
           this.load(res.data)
@@ -85,7 +85,7 @@ export default {
     },
     draw(img, data) {
       const { width, height } = img
-      const { evidenceHash, txId, blockHeight, blockTime } = data
+      const { address, evidenceHash, evidenceName, txId, blockHeight, blockTime } = data
       // 画布
       let canvas = document.createElement('canvas')
       canvas.width = width
@@ -102,8 +102,8 @@ export default {
       ctx.fillText(txId.substring(48), 800, 1300)
       // 下
       ctx.font = '36px Microsoft YaHei'
-      ctx.fillText('0x9bd3ae811324424bf3a29fcca7a9a317b735e869 ', 800, 1520)
-      ctx.fillText('食品溯源', 800, 1620)
+      ctx.fillText(address, 800, 1520)
+      ctx.fillText(evidenceName, 800, 1620)
       ctx.fillText(blockTime, 800, 1720)
       ctx.fillText(blockHeight, 800, 1880)
       // data:image/jpeg;base64,
