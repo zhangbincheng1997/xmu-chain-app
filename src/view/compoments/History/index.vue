@@ -3,7 +3,7 @@
     <van-cell-group inset>
       <van-cell>
         <template #title>
-          <van-tag v-if="history.length === 0" type="success" plain round>
+          <van-tag v-if="historyList.length === 0" type="success" plain round>
             <van-icon name="good-job" />首次扫码，正品认证！
           </van-tag>
           <van-tag v-else type="danger" plain round>
@@ -11,20 +11,20 @@
           </van-tag>
         </template>
       </van-cell>
-      <van-cell title="首次扫码时间">{{ history.length > 0 ? history[0].createTime : '-' }}</van-cell>
-      <van-cell title="首次扫码地点">{{ history.length > 0 ? history[0].location : '-' }}</van-cell>
-      <van-cell title="扫码记录" is-link @click="show = true">{{ history.length }} 条</van-cell>
+      <van-cell title="首次扫码时间">{{ historyList.length > 0 ? historyList[0].createTime : '-' }}</van-cell>
+      <van-cell title="首次扫码地点">{{ historyList.length > 0 ? historyList[0].location : '-' }}</van-cell>
+      <van-cell title="扫码记录" is-link @click="show = true">{{ historyList.length }} 条</van-cell>
     </van-cell-group>
 
     <van-dialog v-model="show" title="扫码记录" close-on-click-overlay>
       <div style="text-align: center; line-height: 25px; font-size: small;">
-        <van-row v-for="(item, i) in history.slice((query.page-1)*query.limit,query.page*query.limit)" :key="i">
+        <van-row v-for="(history, i) in historyList.slice((query.page-1)*query.limit,query.page*query.limit)" :key="i">
           <van-col span="2">{{ (query.page-1)*query.limit + i + 1 }}</van-col>
-          <van-col span="6">{{ item.ip }}</van-col>
-          <van-col span="8">{{ item.location }}</van-col>
-          <van-col span="8">{{ item.createTime }}</van-col>
+          <van-col span="6">{{ history.ip }}</van-col>
+          <van-col span="8">{{ history.location }}</van-col>
+          <van-col span="8">{{ history.createTime }}</van-col>
         </van-row>
-        <van-pagination v-model="query.page" :items-per-page="query.limit" :total-items="history.length" />
+        <van-pagination v-model="query.page" :items-per-page="query.limit" :total-items="historyList.length" />
       </div>
     </van-dialog>
   </div>
@@ -43,7 +43,7 @@ import {
 } from 'vant';
 
 export default {
-  name: 'Shop',
+  name: 'History',
   components: {
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup,
@@ -55,7 +55,7 @@ export default {
     [Tag.name]: Tag
   },
   props: {
-    history: {
+    historyList: {
       type: Array,
       required: true
     }

@@ -2,24 +2,23 @@ import request from '../utils/request'
 
 const API = '/service-trace/app-api/v1/trace'
 
-export function trace(companyId, batchNo, code) {
+export function scan(batchId, code) {
     return request({
-        url: API,
+        url: API + '/scan',
         method: 'get',
         params: {
-            companyId: companyId,
-            batchNo: batchNo,
+            batchId: batchId,
             code: code
         }
     })
 }
 
-export function query(txId) {
+export function detail(batchId) {
     return request({
-        url: API + '/query',
+        url: API + '/detail',
         method: 'get',
         params: {
-            txId: txId
+            batchId: batchId
         }
     })
 }

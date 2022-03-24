@@ -15,18 +15,12 @@
           </van-field>
         </van-form>
       </van-cell>
-      <van-cell is-link @click="showClick">
+      <van-cell>
         <van-tag type="success" plain round>
-          <van-icon name="lock" />已上链：{{ items.txId.substring(0, 36) + '...' }}
+          <van-icon name="lock" />已上链：{{ items.txId.substring(0, 38) + '...' }}
         </van-tag>
       </van-cell>
     </van-cell-group>
-
-    <van-dialog v-model="show" title="保全证书" close-on-click-overlay>
-      <div style="text-align: center;">
-        <img id="image" src="" alt="" height="400px">
-      </div>
-    </van-dialog>
   </div>
 </template>
 
@@ -34,13 +28,11 @@
 import {
   Cell,
   CellGroup,
-  Dialog,
   Icon,
   Form,
   Field,
   Tag,
 } from 'vant';
-import { query } from '../../../api/trace'
 import ImagePreview from '../../../components/ImagePreview'
 
 export default {
@@ -48,7 +40,6 @@ export default {
   components: {
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup,
-    [Dialog.Component.name]: Dialog.Component,
     [Icon.name]: Icon,
     [Form.name]: Form,
     [Field.name]: Field,
@@ -59,55 +50,6 @@ export default {
     items: {
       type: Object,
       required: true
-    }
-  },
-  data() {
-    return {
-      show: false
-    }
-  },
-  methods: {
-    showClick() {
-      query(this.items.txId).then(res => {
-        this.show = true
-        this.$nextTick(() => {
-          this.load(res.data)
-        })
-      })
-    },
-    load(data) {
-      let image = document.getElementById('image')
-      let img = new Image()
-      img.src = require('../../../images/evidence.jpg')
-      img.onload = () => {
-        image.src = this.draw(img, data)
-      }
-    },
-    draw(img, data) {
-      const { width, height } = img
-      const { address, evidenceHash, evidenceName, txId, blockHeight, blockTime } = data
-      // 画布
-      let canvas = document.createElement('canvas')
-      canvas.width = width
-      canvas.height = height
-      // 上下文
-      let ctx = canvas.getContext('2d')
-      ctx.drawImage(img, 0, 0, width, height)
-      ctx.fillStyle = '#000'
-      // 上
-      ctx.font = '48px bold Microsoft YaHei'
-      ctx.fillText(evidenceHash.substring(0, 48), 800, 1050)
-      ctx.fillText(evidenceHash.substring(48), 800, 1100)
-      ctx.fillText(txId.substring(0, 48), 800, 1250)
-      ctx.fillText(txId.substring(48), 800, 1300)
-      // 下
-      ctx.font = '36px Microsoft YaHei'
-      ctx.fillText(address, 800, 1520)
-      ctx.fillText(evidenceName, 800, 1620)
-      ctx.fillText(blockTime, 800, 1720)
-      ctx.fillText(blockHeight, 800, 1880)
-      // data:image/jpeg;base64,
-      return canvas.toDataURL('image/jpeg')
     }
   }
 }
