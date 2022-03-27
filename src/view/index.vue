@@ -7,12 +7,15 @@
     <van-divider />
     <van-tabs>
       <van-tab v-for="(trace, i) in traceList" :key="i" :title="trace.productName">
-        <Shop v-if="trace.shop" :shop="trace.shop" />
-        <van-divider />
+        <van-divider :style="{ color: '#07C160', borderColor: '#07C160', padding: '0 16px' }">
+          批次号：{{ trace.batchNo }}
+        </van-divider>
         <div v-for="(items, i) in trace.items" :key="i">
           <ItemsCard :items="items" />
           <van-divider />
         </div>
+        <Shop v-if="trace.shop" :shop="trace.shop" />
+        <van-divider />
       </van-tab>
     </van-tabs>
   </div>
